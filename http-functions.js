@@ -4,21 +4,23 @@ function printHTML (html) {
   console.log(html);
 }
 
-module.exports = function getHTML (options, callback) {
+module.exports = {
+  getHTML: function (options, callback) {
 
-  var https = require('https');
+    var https = require('https');
 
-  https.get(options, function(response) {
+    https.get(options, function(response) {
 
-    response.setEncoding('utf8');
-    response.on('data', function (chunk) {
-      body += chunk;
+      response.setEncoding('utf8');
+      response.on('data', function (chunk) {
+        body += chunk;
 
+      })
+
+      response.on('end', function () {
+        callback(body);
+        console.log('Response stream complete');
+      })
     })
-
-    response.on('end', function () {
-      callback(body);
-      console.log('Response stream complete');
-    })
-  })
+  }
 }
