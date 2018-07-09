@@ -15,6 +15,10 @@ function getAndPrintHTMLChunks() {
       console.log(chunk + '\n');
     })
 
+    response.on('end', function () {
+      console.log('Response stream complete')
+    })
+
   })
 }
 
